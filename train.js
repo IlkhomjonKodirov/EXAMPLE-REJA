@@ -6,7 +6,7 @@ biri qoldiq, biri sotish va biri qabul. Har bir method ishga tushgan vaqt ham lo
 shop.sotish('non', 3) & shop.qabul('cola', 4) & shop.qoldiq() return hozir 20:50da 1ta non, 5ta lagmon va 6ta cola mavjud! */
 
 const moment = require('moment');
-const time = moment().format('HH:mm:ss')
+const time = moment().format('HH:mm')
 
 class Shop {
   constructor(non, lagmon, cola) {
@@ -37,11 +37,12 @@ class Shop {
 }
 
 const shop = new Shop(4, 5, 8);
+shop.qoldiq();
 shop.sotish('non', 2);
 shop.qabul('lagmon', 1);
-// shop.qoldiq();
 shop.qabul('cola', 1);
 shop.qoldiq();
+
 
 
 // /******************CALLBACK FUNCTION***************************************/
