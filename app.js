@@ -42,7 +42,7 @@ app.post("/create-item", (req, res) => {
     // } else {
     //   res.end('successfully added');
     // }
-    console.log(data.ops);// MongoDB ops degan arrayini qaytaradi -> [ { reja: 'Yangi reja', _id: 6460992416bf050418aac1d8 } ]
+    // console.log(data.ops);// MongoDB ops degan arrayini qaytaradi -> [ { reja: 'Yangi reja', _id: 6460992416bf050418aac1d8 } ]
     res.json(data.ops[0]); // data.ops arrayi ichidagi 1 ta elementni ajratib olib res.json orqali frontendga yuboryapmiz
   }); 
   
