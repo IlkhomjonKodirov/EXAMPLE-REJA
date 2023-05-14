@@ -31,15 +31,36 @@ app.set("view engine", "ejs");
 // post - ma'lumotni o'zi bilan olib kelib databasega o'sha ma'lumotni yozadi
 app.post("/create-item", (req, res) => {
   // console.log(req.body);
-  // console.log(req);
-  // res.json({test: "success"}); // json shaklida ma'lumotni qaytarish(test: success qaytib keladi)
+  // res.end("success");// biror reja yozib enter bosilganda ekranda success yozuvi va terminal serverda { reja: "IT ni o'rganamiz" } hosil bo'ladi.
+  /* Endi shu rejamizni databasega yozamiz */
+  console.log('user entered /create-item');
+  const new_reja = req.body.reja;
+  db.collection("plans").insertOne({reja: new_reja}, (err, data) => {
+    if(err) {
+      console.log(err);
+      res.end('something went wrong');
+    } else {
+      res.end('successfully added');
+    }
+  }); 
+  
 })
 
 app.get("/author", (req, res) => {
   res.render("author", {user: user});
 })
 app.get("/", function(req, res) {
-  res.render("reja");
+  /*************Databasedan malumot o'qiymiz*************** */
+  console.log('user entered /');
+  db.collection("plans").find().toArray((err, data) => {
+    if(err) {
+      console.log(err);
+      res.end("Something went wront")
+    } else {
+      // console.log(data);
+      res.render("reja", {items: data}); // olgan datani ejs ichiga paste qilinadi
+    }
+  });
 })
 
 module.exports = app;
