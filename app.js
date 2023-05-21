@@ -8,15 +8,6 @@ const db = require("./server").db();// mongoDB instanceni(objectini) olib beradi
 
 const mongodb = require("mongodb");
 
-let user;
-fs.readFile("database/user.json", "utf8", (err, data) => {
-  if(err) {
-    console.log("ERROR:", err);
-  }else {
-    user = JSON.parse(data);
-  }
-})
-
 // 1 -bosqich: Kirish kodlari 
 app.use(express.static("public")); 
 app.use(express.json());
@@ -32,19 +23,11 @@ app.set("view engine", "ejs");
 // 4 - bosqich: Routingga bog'liq kodlar
 // post - ma'lumotni o'zi bilan olib kelib databasega o'sha ma'lumotni yozadi
 app.post("/create-item", (req, res) => {
-  // console.log(req.body);
-  // res.end("success");// biror reja yozib enter bosilganda ekranda success yozuvi va terminal serverda { reja: "IT ni o'rganamiz" } hosil bo'ladi.
-  /* Endi shu rejamizni databasega yozamiz */
+  
   console.log('user entered /create-item');
   const new_reja = req.body.reja;
   db.collection("plans").insertOne({reja: new_reja}, (err, data) => {
-    // if(err) {
-    //   console.log(err);
-    //   res.end('something went wrong');
-    // } else {
-    //   res.end('successfully added');
-    // }
-    // console.log(data.ops);// MongoDB ops degan arrayini qaytaradi -> [ { reja: 'Yangi reja', _id: 6460992416bf050418aac1d8 } ]
+    
     res.json(data.ops[0]); // data.ops arrayi ichidagi 1 ta elementni ajratib olib res.json orqali frontendga yuboryapmiz
   }); 
 });
@@ -58,6 +41,7 @@ app.post("/delete-item", (req, res) => {
     res.json({state: "success"});
   })
 });
+
 /***********************************  edit operations ****************************************/
 app.post("/edit-item", (req, res) => {
   const data = req.body;
@@ -77,10 +61,7 @@ app.post("/delete-all", (req, res) => {
     });
   }
 });
-///////////////////////////////////////////////////////////////////////////////////////////////
-app.get("/author", (req, res) => {
-  res.render("author", {user: user});
-})
+
 app.get("/", function(req, res) {
   /*************Databasedan malumot o'qiymiz*************** */
   console.log('user entered /');
