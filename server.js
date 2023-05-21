@@ -17,9 +17,9 @@ mongodb.connect(connectionString, {
       module.exports = client; // server js faylidan ovolamiz. client ichida db() degan object bor.shuning uchun kerak bizga
       const app = require("./app");
       const server = http.createServer(app);
-      let PORT = 3000;
-      server.listen(PORT, function() {
-        console.log(`The server is running succesfully on port: ${PORT}, http://localhost:${PORT}`);
+      let PORD = process.env.PORD || 3003;
+      server.listen(PORD, function() {
+        console.log(`The server is running succesfully on port: ${PORD}, http://localhost:${PORD}`);
     });
   }
 })
